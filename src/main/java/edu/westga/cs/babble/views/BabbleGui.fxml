@@ -49,13 +49,13 @@
             <Font size="18.0" />
           </font>
         </Label>
-            <ListView fx:id="listView" layoutX="37.0" layoutY="98.0" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
+            <ListView fx:id="tileListView" layoutX="37.0" layoutY="98.0" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
             <Label alignment="CENTER" layoutX="39.0" layoutY="160.0" style="&#10;" text="Your Word" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <ListView layoutX="39.0" layoutY="187.0" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
+            <ListView fx:id="wordListView" layoutX="39.0" layoutY="187.0" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
             <Button fx:id="addButton" layoutX="525.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleAddButtonAction" text="Play Word" />
             <Button layoutX="472.0" layoutY="277.0" mnemonicParsing="false" text="Reset" />
             <Label layoutX="411.0" layoutY="328.0" text="Score:" />

@@ -16,13 +16,18 @@ import javafx.scene.control.SelectionMode;
 public class BabbleController {
 
 	@FXML
-	private ListView<Character> listView;
+	private ListView<Character> tileListView;
+	private ListView<Character> wordListView;
 	private ObservableList<Character> item;
+	private ObservableList<Character> item_word;
 	private Button addButton;
 
 	private TileBag tileBag = new TileBag();
 	private TileRack tileRack = new TileRack();
+	private TileRack wordRack = new TileRack();
+	private Tile tile;
 
+	
 	public void initialize() throws EmptyTileBagException {
 
 		while (tileRack.getNumberOfTilesNeeded() != 0) {
@@ -36,15 +41,17 @@ public class BabbleController {
 			i++;
 		}
 
-		listView.setItems(item);
+		tileListView.setItems(item);
 		
-        listView.setOnMouseClicked(event -> {
-            Character selectedTile = listView.getSelectionModel().getSelectedItem();
-            System.out.println(selectedTile);
+		tileListView.setOnMouseClicked(event -> {
+            char clickedTile = tileListView.getSelectionModel().getSelectedItem();
+            tile = new Tile(clickedTile);
+            //add tile to wordListView
+            //remove tile from tileRack
+            System.out.println(clickedTile);
         });
+		
 
-		//maybe remove?
-		listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
 	@FXML
