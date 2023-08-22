@@ -31,13 +31,19 @@ public class BabbleController {
 
 		item = FXCollections.observableArrayList();
 		int i = 0;
-		while (i != 7) {
+		while (i != tileRack.tiles().size()) {
 			item.add(tileRack.tiles().get(i).getLetter());
 			i++;
 		}
 
 		listView.setItems(item);
+		
+        listView.setOnMouseClicked(event -> {
+            Character selectedTile = listView.getSelectionModel().getSelectedItem();
+            System.out.println(selectedTile);
+        });
 
+		//maybe remove?
 		listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
