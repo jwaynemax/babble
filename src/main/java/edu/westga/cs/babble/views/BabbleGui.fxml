@@ -40,7 +40,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs.babble.controllers.BabbleController">
   <children>
     <AnchorPane cacheShape="false" centerShape="false" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
       <children>
@@ -56,7 +56,7 @@
                </font>
             </Label>
             <ListView layoutX="39.0" layoutY="187.0" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
-            <Button fx:id="addButton" layoutX="525.0" layoutY="277.0" mnemonicParsing="false" text="Play Word" />
+            <Button fx:id="addButton" layoutX="525.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleAddButtonAction" text="Play Word" />
             <Button layoutX="472.0" layoutY="277.0" mnemonicParsing="false" text="Reset" />
             <Label layoutX="411.0" layoutY="328.0" text="Score:" />
             <TextField editable="false" layoutX="451.0" layoutY="324.0" />
