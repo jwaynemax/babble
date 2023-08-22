@@ -17,9 +17,12 @@ public class BabbleController {
 
 	@FXML
 	private ListView<Character> tileListView;
+	
+	@FXML
 	private ListView<Character> wordListView;
+	
 	private ObservableList<Character> item;
-	private ObservableList<Character> item_word;
+	private ObservableList<Character> clickedItem;
 	private Button addButton;
 
 	private TileBag tileBag = new TileBag();
@@ -42,14 +45,17 @@ public class BabbleController {
 		}
 
 		tileListView.setItems(item);
-		
+        
+		clickedItem = FXCollections.observableArrayList();
+        wordListView.setItems(clickedItem);
+
 		tileListView.setOnMouseClicked(event -> {
-            char clickedTile = tileListView.getSelectionModel().getSelectedItem();
-            tile = new Tile(clickedTile);
-            //add tile to wordListView
+            Character clickedTile = tileListView.getSelectionModel().getSelectedItem();
+            clickedItem.add(clickedTile);
             //remove tile from tileRack
             System.out.println(clickedTile);
         });
+		
 		
 
 	}
