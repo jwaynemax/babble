@@ -4,6 +4,7 @@ import edu.westga.cs.babble.model.EmptyTileBagException;
 import edu.westga.cs.babble.model.Tile;
 import edu.westga.cs.babble.model.TileBag;
 import edu.westga.cs.babble.model.TileGroup;
+import edu.westga.cs.babble.model.TileNotInGroupException;
 import edu.westga.cs.babble.model.TileRack;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,29 +32,31 @@ public class BabbleController {
 	private Tile tile;
 
 	
-	public void initialize() throws EmptyTileBagException {
-
-		while (tileRack.getNumberOfTilesNeeded() != 0) {
-			tileRack.append(tileBag.drawTile());
-		}
-
+	public void initialize() throws EmptyTileBagException {	
 		item = FXCollections.observableArrayList();
-		int i = 0;
-		while (i != tileRack.tiles().size()) {
-			item.add(tileRack.tiles().get(i).getLetter());
-			i++;
+		tileListView.setItems(item);
+
+		
+		while (tileRack.getNumberOfTilesNeeded() != 0) {
+			tile = tileBag.drawTile();
+			tileRack.append(tile);
+			item.add(tile.getLetter());
 		}
 
-		tileListView.setItems(item);
         
 		clickedItem = FXCollections.observableArrayList();
         wordListView.setItems(clickedItem);
 
+        
 		tileListView.setOnMouseClicked(event -> {
             Character clickedTile = tileListView.getSelectionModel().getSelectedItem();
+            tile = new Tile(clickedTile);
+            wordRack.append(tile);
+            System.out.println(wordRack.getHand());
             clickedItem.add(clickedTile);
             //remove tile from tileRack
-            System.out.println(clickedTile);
+            
+            System.out.println(tileRack.tiles().indexOf(0));
         });
 		
 		
