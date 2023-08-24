@@ -1,18 +1,20 @@
 package edu.westga.cs.babble.controllers;
 
 import edu.westga.cs.babble.model.EmptyTileBagException;
+import edu.westga.cs.babble.model.PlayedWord;
 import edu.westga.cs.babble.model.Tile;
 import edu.westga.cs.babble.model.TileBag;
-import edu.westga.cs.babble.model.TileGroup;
 import edu.westga.cs.babble.model.TileNotInGroupException;
 import edu.westga.cs.babble.model.TileRack;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 
@@ -26,20 +28,24 @@ public class BabbleController {
 	@FXML
 	private ListView<Tile> wordListView;
 	
+	@FXML
+	private TextField score;
+	
 	private ObservableList<Tile> item;
 	private ObservableList<Tile> clickedItem;
-	private Button addButton;
 
 	private TileBag tileBag = new TileBag();
 	private TileRack tileRack = new TileRack();
-	private TileRack wordRack = new TileRack();
+	private PlayedWord playedWord = new PlayedWord();
 	private Tile tile;
+	private WordDictionary word = new WordDictionary();
 
 	
-	public void initialize() throws EmptyTileBagException {	
+	public void initialize() throws EmptyTileBagException {
 		item = FXCollections.observableArrayList();
 		tileListView.setItems(item);
 		
+		//cell renderer
 		tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
             @Override
             public ListCell<Tile> call(ListView<Tile> param) {
@@ -47,22 +53,21 @@ public class BabbleController {
             }
         });
 
-		
+		//populate initial tiles in tile rack
 		while (tileRack.getNumberOfTilesNeeded() != 0) {
 			tile = tileBag.drawTile();
 			tileRack.append(tile);
 			item.add(tile);
 		}
 
-        
+        //logic for when a tile is clicked to add it to your word
 		clickedItem = FXCollections.observableArrayList();
         wordListView.setItems(clickedItem);
 
         
 		tileListView.setOnMouseClicked(event -> {
             Tile clickedTile = tileListView.getSelectionModel().getSelectedItem();
-            wordRack.append(clickedTile);
-            System.out.println(wordRack.getHand());
+            playedWord.append(clickedTile);
             clickedItem.add(clickedTile);
             //remove tile from tileRack
             wordListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
@@ -82,6 +87,8 @@ public class BabbleController {
         });
 		
 		
+		
+		
 
 	}
 	
@@ -98,8 +105,35 @@ public class BabbleController {
     }
 
 	@FXML
-	private void handleAddButtonAction(ActionEvent event) {
-		item.add(tile);
+	private void playWord(ActionEvent event) throws EmptyTileBagException {
+		//if word is valid --Done
+		//then get points -- Done 
+		//Add points 
+		//clear word from your word ListView -- Done
+		//add up to 7 tiles from bag back to tiles -- Done
+		
+		if (word.isValidWord(playedWord.getHand()) == true) {
+									
+			score.textProperty().bind(Bindings.concat(score.getText() + playedWord.getScore()));
+			
+			playedWord.clear();
+			clickedItem.clear();
+			
+			while (tileRack.getNumberOfTilesNeeded() != 0) {
+				tile = tileBag.drawTile();
+				tileRack.append(tile);
+				item.add(tile);
+			}
+			
+				        
+		} else {
+			Alert message = new Alert(AlertType.INFORMATION);
+			message.setTitle("Message");
+			
+			message.setHeaderText("Message");
+			message.setContentText("Not a valid word");
+			message.show();
+		}
 	}
 
 }

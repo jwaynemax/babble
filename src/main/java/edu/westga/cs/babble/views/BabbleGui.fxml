@@ -56,10 +56,10 @@
                </font>
             </Label>
             <ListView fx:id="wordListView" layoutX="39.0" layoutY="187.0" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
-            <Button fx:id="addButton" layoutX="525.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleAddButtonAction" text="Play Word" />
+            <Button fx:id="playWord" layoutX="525.0" layoutY="277.0" mnemonicParsing="false" onAction="#playWord" text="Play Word" />
             <Button layoutX="472.0" layoutY="277.0" mnemonicParsing="false" text="Reset" />
             <Label layoutX="411.0" layoutY="328.0" text="Score:" />
-            <TextField editable="false" layoutX="451.0" layoutY="324.0" />
+            <TextField fx:id="score" editable="false" layoutX="451.0" layoutY="324.0" />
       </children>
     </AnchorPane>
   </children>
