@@ -38,6 +38,7 @@ public class BabbleController {
 
 	public void initialize() throws EmptyTileBagException {
 		tileListView.setItems(tileRack.tiles());
+		wordListView.setItems(playedWord.tiles());
 
 		// cell renderer
 		tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
@@ -52,51 +53,6 @@ public class BabbleController {
 			tile = tileBag.drawTile();
 			tileRack.append(tile);
 		}
-
-		// logic for when a tile is clicked to add it to your word
-		wordListView.setItems(playedWord.tiles());
-
-//		tileListView.setOnMouseClicked(event -> {
-//			Tile clickedTile = tileListView.getSelectionModel().getSelectedItem();
-//			playedWord.append(clickedTile);
-//
-//			// remove tile from tileRack
-//			wordListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
-//				@Override
-//				public ListCell<Tile> call(ListView<Tile> param) {
-//					return new TileListCell();
-//				}
-//			});
-//
-//			try {
-//				tileRack.remove(clickedTile);
-//			} catch (TileNotInGroupException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		});
-		
-		wordListView.setOnMouseClicked(event -> {
-			Tile clickedTile = wordListView.getSelectionModel().getSelectedItem();
-			tileRack.append(clickedTile);
-
-			// remove tile from tileRack
-			tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
-				@Override
-				public ListCell<Tile> call(ListView<Tile> param) {
-					return new TileListCell();
-				}
-			});
-
-			try {
-				playedWord.remove(clickedTile);
-			} catch (TileNotInGroupException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		});
-
 	}
 
 	private class TileListCell extends ListCell<Tile> {
@@ -134,20 +90,20 @@ public class BabbleController {
 			message.show();
 		}
 	}
-	
+
 	@FXML
 	private void reset(ActionEvent event) throws TileNotInGroupException {
-		
-		for (int i = 0; i <= playedWord.tiles().size()-1; i++) {
+
+		for (int i = 0; i <= playedWord.tiles().size() - 1; i++) {
 			tileRack.append(playedWord.tiles().get(i));
 		}
-		
+
 		playedWord.clear();
 	}
-	
+
 	@FXML
 	private void handleTileClicked(Event event) {
-		
+
 		Tile clickedTile = tileListView.getSelectionModel().getSelectedItem();
 		playedWord.append(clickedTile);
 
@@ -165,6 +121,28 @@ public class BabbleController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	private void handleYourWordTileClicked(Event event) {
+		Tile clickedTile = wordListView.getSelectionModel().getSelectedItem();
+		tileRack.append(clickedTile);
+
+		// remove tile from tileRack
+		tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
+			@Override
+			public ListCell<Tile> call(ListView<Tile> param) {
+				return new TileListCell();
+			}
+		});
+
+		try {
+			playedWord.remove(clickedTile);
+		} catch (TileNotInGroupException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }
