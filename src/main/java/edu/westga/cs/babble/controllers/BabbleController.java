@@ -6,11 +6,8 @@ import edu.westga.cs.babble.model.Tile;
 import edu.westga.cs.babble.model.TileBag;
 import edu.westga.cs.babble.model.TileNotInGroupException;
 import edu.westga.cs.babble.model.TileRack;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -31,9 +28,6 @@ public class BabbleController {
 	@FXML
 	private TextField score;
 
-	private ObservableList<Tile> item;
-	private ObservableList<Tile> clickedItem;
-
 	private TileBag tileBag = new TileBag();
 	private TileRack tileRack = new TileRack();
 	private PlayedWord playedWord = new PlayedWord();
@@ -42,8 +36,7 @@ public class BabbleController {
 	IntegerProperty intProp = new SimpleIntegerProperty();
 
 	public void initialize() throws EmptyTileBagException {
-		item = FXCollections.observableArrayList();
-		tileListView.setItems(item);
+		tileListView.setItems(tileRack.tiles());
 
 		// cell renderer
 		tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
@@ -57,17 +50,15 @@ public class BabbleController {
 		while (tileRack.getNumberOfTilesNeeded() != 0) {
 			tile = tileBag.drawTile();
 			tileRack.append(tile);
-			item.add(tile);
 		}
 
 		// logic for when a tile is clicked to add it to your word
-		clickedItem = FXCollections.observableArrayList();
-		wordListView.setItems(clickedItem);
+		wordListView.setItems(playedWord.tiles());
 
 		tileListView.setOnMouseClicked(event -> {
 			Tile clickedTile = tileListView.getSelectionModel().getSelectedItem();
 			playedWord.append(clickedTile);
-			clickedItem.add(clickedTile);
+
 			// remove tile from tileRack
 			wordListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
 				@Override
@@ -78,7 +69,6 @@ public class BabbleController {
 
 			try {
 				tileRack.remove(clickedTile);
-				item.remove(clickedTile);
 			} catch (TileNotInGroupException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -107,12 +97,10 @@ public class BabbleController {
 			intProp.set(Integer.parseInt(score.getText()) + playedWord.getScore());
 
 			playedWord.clear();
-			clickedItem.clear();
 
 			while (tileRack.getNumberOfTilesNeeded() != 0) {
 				tile = tileBag.drawTile();
 				tileRack.append(tile);
-				item.add(tile);
 			}
 
 		} else {
@@ -123,6 +111,16 @@ public class BabbleController {
 			message.setContentText("Not a valid word");
 			message.show();
 		}
+	}
+	
+	@FXML
+	private void reset(ActionEvent event) throws TileNotInGroupException {
+		
+		for (int i = 0; i <= playedWord.tiles().size()-1; i++) {
+			tileRack.append(playedWord.tiles().get(i));
+		}
+		
+		playedWord.clear();
 	}
 
 }
