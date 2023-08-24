@@ -49,7 +49,7 @@
             <Font size="18.0" />
           </font>
         </Label>
-            <ListView fx:id="tileListView" layoutX="37.0" layoutY="98.0" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
+            <ListView fx:id="tileListView" layoutX="37.0" layoutY="98.0" onMouseClicked="#handleTileClicked" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
             <Label alignment="CENTER" layoutX="39.0" layoutY="160.0" style="&#10;" text="Your Word" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
