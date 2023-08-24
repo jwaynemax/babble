@@ -44,7 +44,7 @@
   <children>
     <AnchorPane cacheShape="false" centerShape="false" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="37.0" layoutY="71.0" style="&#10;" text="Tiles" textAlignment="CENTER" wrapText="false">
+        <Label accessibleText="Tiles" alignment="CENTER" layoutX="37.0" layoutY="71.0" style="&#10;" text="Tiles" textAlignment="CENTER" wrapText="false">
           <font>
             <Font size="18.0" />
           </font>
@@ -58,7 +58,7 @@
             <ListView fx:id="wordListView" layoutX="39.0" layoutY="187.0" onMouseClicked="#handleYourWordTileClicked" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
             <Button fx:id="playWord" layoutX="525.0" layoutY="277.0" mnemonicParsing="false" onAction="#playWord" text="Play Word" />
             <Button fx:id="reset" layoutX="472.0" layoutY="277.0" mnemonicParsing="false" onAction="#reset" text="Reset" />
-            <Label layoutX="411.0" layoutY="328.0" text="Score:" />
+            <Label layoutX="411.0" layoutY="328.0" text="Score:" textOverrun="LEADING_ELLIPSIS" />
             <TextField fx:id="score" editable="false" layoutX="451.0" layoutY="324.0" />
       </children>
     </AnchorPane>
