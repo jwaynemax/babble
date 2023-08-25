@@ -18,6 +18,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 
+/**
+ * Controller for BabbleGui
+ * @version Fall 2023
+ * @author Justin Maxwell
+ */
 public class BabbleController {
 
 	@FXML
@@ -36,12 +41,16 @@ public class BabbleController {
 	private WordDictionary word = new WordDictionary();
 	private IntegerProperty intProp = new SimpleIntegerProperty();
 
+	/**
+	 * Entry point for FXML 
+	 * @throws EmptyTileBagException
+	 */
 	public void initialize() throws EmptyTileBagException {
-		tileListView.setItems(tileRack.tiles());
-		wordListView.setItems(playedWord.tiles());
+		this.tileListView.setItems(tileRack.tiles());
+		this.wordListView.setItems(playedWord.tiles());
 
 		// cell renderer
-		tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
+		this.tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
 			@Override
 			public ListCell<Tile> call(ListView<Tile> param) {
 				return new TileListCell();
@@ -64,20 +73,20 @@ public class BabbleController {
 	}
 	
 	private void drawTilesFromBag() throws EmptyTileBagException {
-		while (tileRack.getNumberOfTilesNeeded() != 0) {
-			tile = tileBag.drawTile();
-			tileRack.append(tile);
+		while (this.tileRack.getNumberOfTilesNeeded() != 0) {
+			this.tile = this.tileBag.drawTile();
+			this.tileRack.append(this.tile);
 		}
 	}
 
 	@FXML
 	private void playWord(ActionEvent event) throws EmptyTileBagException {
-		if (word.isValidWord(playedWord.getHand()) == true) {
+		if (this.word.isValidWord(this.playedWord.getHand()) == true) {
 
-			score.textProperty().bind(intProp.asString());
-			intProp.set(Integer.parseInt(score.getText()) + playedWord.getScore());
+			this.score.textProperty().bind(this.intProp.asString());
+			this.intProp.set(Integer.parseInt(this.score.getText()) + this.playedWord.getScore());
 
-			playedWord.clear();
+			this.playedWord.clear();
 			this.drawTilesFromBag();
 
 		} else {
@@ -93,25 +102,25 @@ public class BabbleController {
 	@FXML
 	private void reset(ActionEvent event) throws TileNotInGroupException {
 
-		for (int i = 0; i <= playedWord.tiles().size() - 1; i++) {
-			tileRack.append(playedWord.tiles().get(i));
+		for (int index = 0; index <= this.playedWord.tiles().size() - 1; index++) {
+			this.tileRack.append(this.playedWord.tiles().get(index));
 		}
 
-		playedWord.clear();
+		this.playedWord.clear();
 	}
 
 	@FXML
 	private void handleTileClicked(Event event) {
 		
-		if(!(tileListView.getSelectionModel().getSelectedItem() == null)) {
+		if (!(this.tileListView.getSelectionModel().getSelectedItem() == null)) {
 				
-			Tile clickedTile = tileListView.getSelectionModel().getSelectedItem();
+			Tile clickedTile = this.tileListView.getSelectionModel().getSelectedItem();
 			
-			if(!clickedTile.equals(null)) {
-				playedWord.append(clickedTile);
+			if (!clickedTile.equals(null)) {
+				this.playedWord.append(clickedTile);
 			}
 	
-			wordListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
+			this.wordListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
 				@Override
 				public ListCell<Tile> call(ListView<Tile> param) {
 					return new TileListCell();
@@ -119,9 +128,9 @@ public class BabbleController {
 			});
 	
 			try {
-				tileRack.remove(clickedTile);
-			} catch (TileNotInGroupException e) {
-				e.printStackTrace();
+				this.tileRack.remove(clickedTile);
+			} catch (TileNotInGroupException error) {
+				error.printStackTrace();
 			}
 		}
 	}
@@ -129,12 +138,12 @@ public class BabbleController {
 	@FXML
 	private void handleYourWordTileClicked(Event event) {
 		
-		if(!(wordListView.getSelectionModel().getSelectedItem() == null)) {
-			Tile clickedTile = wordListView.getSelectionModel().getSelectedItem();
+		if (!(this.wordListView.getSelectionModel().getSelectedItem() == null)) {
+			Tile clickedTile = this.wordListView.getSelectionModel().getSelectedItem();
 			
-			tileRack.append(clickedTile);
+			this.tileRack.append(clickedTile);
 
-			tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
+			this.tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
 				@Override
 				public ListCell<Tile> call(ListView<Tile> param) {
 					return new TileListCell();
@@ -142,12 +151,10 @@ public class BabbleController {
 			});
 
 			try {
-				playedWord.remove(clickedTile);
-			} catch (TileNotInGroupException e) {
-				e.printStackTrace();
+				this.playedWord.remove(clickedTile);
+			} catch (TileNotInGroupException error) {
+				error.printStackTrace();
 			}
 		}
-
 	}
-
 }
