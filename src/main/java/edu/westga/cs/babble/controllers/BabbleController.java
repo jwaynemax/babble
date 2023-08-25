@@ -34,7 +34,7 @@ public class BabbleController {
 	private PlayedWord playedWord = new PlayedWord();
 	private Tile tile;
 	private WordDictionary word = new WordDictionary();
-	IntegerProperty intProp = new SimpleIntegerProperty();
+	private IntegerProperty intProp = new SimpleIntegerProperty();
 
 	public void initialize() throws EmptyTileBagException {
 		tileListView.setItems(tileRack.tiles());
@@ -47,12 +47,8 @@ public class BabbleController {
 				return new TileListCell();
 			}
 		});
-
-		// populate initial tiles in tile rack
-		while (tileRack.getNumberOfTilesNeeded() != 0) {
-			tile = tileBag.drawTile();
-			tileRack.append(tile);
-		}
+		
+		this.drawTilesFromBag();
 	}
 
 	private class TileListCell extends ListCell<Tile> {
@@ -66,6 +62,13 @@ public class BabbleController {
 			}
 		}
 	}
+	
+	private void drawTilesFromBag() throws EmptyTileBagException {
+		while (tileRack.getNumberOfTilesNeeded() != 0) {
+			tile = tileBag.drawTile();
+			tileRack.append(tile);
+		}
+	}
 
 	@FXML
 	private void playWord(ActionEvent event) throws EmptyTileBagException {
@@ -75,11 +78,7 @@ public class BabbleController {
 			intProp.set(Integer.parseInt(score.getText()) + playedWord.getScore());
 
 			playedWord.clear();
-
-			while (tileRack.getNumberOfTilesNeeded() != 0) {
-				tile = tileBag.drawTile();
-				tileRack.append(tile);
-			}
+			this.drawTilesFromBag();
 
 		} else {
 			Alert message = new Alert(AlertType.INFORMATION);
@@ -122,7 +121,6 @@ public class BabbleController {
 			try {
 				tileRack.remove(clickedTile);
 			} catch (TileNotInGroupException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -146,7 +144,6 @@ public class BabbleController {
 			try {
 				playedWord.remove(clickedTile);
 			} catch (TileNotInGroupException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
