@@ -48,18 +48,29 @@ public class BabbleController {
 	public void initialize() throws EmptyTileBagException {
 		this.tileListView.setItems(this.tileRack.tiles());
 		this.wordListView.setItems(this.playedWord.tiles());
+		
+		this.drawTilesFromBag();
+		
+		this.cellFactory(this.tileListView);
 
-		// cell renderer
-		this.tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
+	}
+	
+	/**
+	 * Cell factory to display #getLetter from ListView tile objects to ListCell
+	 * @param listView -- either 'your word' or 'tile' 
+	 */
+	private void cellFactory(ListView<Tile> listView) {
+		listView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
 			@Override
 			public ListCell<Tile> call(ListView<Tile> param) {
 				return new TileListCell();
 			}
 		});
-		
-		this.drawTilesFromBag();
 	}
 
+	/**
+	 * Helper class for cell factory
+	 */
 	private class TileListCell extends ListCell<Tile> {
 		@Override
 		protected void updateItem(Tile item, boolean empty) {
@@ -67,7 +78,7 @@ public class BabbleController {
 			if (empty || item == null) {
 				setText(null);
 			} else {
-				setText(Character.toString(item.getLetter())); // Display the string representation of the Word object
+				setText(Character.toString(item.getLetter()));
 			}
 		}
 	}
@@ -137,13 +148,8 @@ public class BabbleController {
 			if (!clickedTile.equals(null)) {
 				this.playedWord.append(clickedTile);
 			}
-	
-			this.wordListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
-				@Override
-				public ListCell<Tile> call(ListView<Tile> param) {
-					return new TileListCell();
-				}
-			});
+			
+			this.cellFactory(this.wordListView);
 	
 			try {
 				this.tileRack.remove(clickedTile);
