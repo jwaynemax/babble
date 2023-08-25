@@ -79,6 +79,7 @@ public class BabbleController {
 				setText(null);
 			} else {
 				setText(Character.toString(item.getLetter()));
+				setAccessibleText(Character.toString(item.getLetter()));
 			}
 		}
 	}

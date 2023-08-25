@@ -36,6 +36,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -44,22 +45,40 @@
   <children>
     <AnchorPane cacheShape="false" centerShape="false" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
       <children>
-        <Label accessibleText="Tiles" alignment="CENTER" layoutX="37.0" layoutY="71.0" style="&#10;" text="Tiles" textAlignment="CENTER" wrapText="false">
+        <Label accessibleHelp="Tiles" accessibleText="Tiles" alignment="CENTER" layoutX="37.0" layoutY="71.0" style="&#10;" text="Tiles" textAlignment="CENTER" wrapText="false">
           <font>
             <Font size="18.0" />
           </font>
+               <tooltip>
+                  <Tooltip text="Tile" />
+               </tooltip>
         </Label>
-            <ListView fx:id="tileListView" layoutX="37.0" layoutY="98.0" onMouseClicked="#handleTileClicked" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
-            <Label alignment="CENTER" layoutX="39.0" layoutY="160.0" style="&#10;" text="Your Word" textAlignment="CENTER" wrapText="false">
+            <ListView fx:id="tileListView" accessibleHelp="List of available letters to use for your word" accessibleText="List of available letters to use for your word" layoutX="37.0" layoutY="98.0" onMouseClicked="#handleTileClicked" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0">
+               <tooltip>
+                  <Tooltip text="List of available letters to use for your word." />
+               </tooltip></ListView>
+            <Label accessibleHelp="Your Word" accessibleText="Your Word" alignment="CENTER" layoutX="39.0" layoutY="160.0" style="&#10;" text="Your Word" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
                </font>
+               <tooltip>
+                  <Tooltip text="Your Word" />
+               </tooltip>
             </Label>
-            <ListView fx:id="wordListView" layoutX="39.0" layoutY="187.0" onMouseClicked="#handleYourWordTileClicked" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0" />
+            <ListView fx:id="wordListView" accessibleHelp="Your word created by the letters selected from the tile list" accessibleText="Your word created by the letters selected from the tile list" layoutX="39.0" layoutY="187.0" onMouseClicked="#handleYourWordTileClicked" orientation="HORIZONTAL" prefHeight="44.0" prefWidth="557.0">
+               <tooltip>
+                  <Tooltip text="Your word created by letters selected from the tile list." />
+               </tooltip></ListView>
             <Button fx:id="playWord" layoutX="525.0" layoutY="277.0" mnemonicParsing="false" onAction="#playWord" text="Play Word" />
             <Button fx:id="reset" layoutX="472.0" layoutY="277.0" mnemonicParsing="false" onAction="#reset" text="Reset" />
-            <Label layoutX="411.0" layoutY="328.0" text="Score:" textOverrun="LEADING_ELLIPSIS" />
-            <TextField fx:id="score" editable="false" layoutX="451.0" layoutY="324.0" />
+            <Label layoutX="411.0" layoutY="328.0" text="Score:" textOverrun="LEADING_ELLIPSIS">
+               <tooltip>
+                  <Tooltip text="Score" />
+               </tooltip></Label>
+            <TextField fx:id="score" editable="false" layoutX="451.0" layoutY="324.0">
+               <tooltip>
+                  <Tooltip text="Your score calculated by number of total points from each letter for each valid word." />
+               </tooltip></TextField>
       </children>
     </AnchorPane>
   </children>
