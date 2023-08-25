@@ -103,44 +103,52 @@ public class BabbleController {
 
 	@FXML
 	private void handleTileClicked(Event event) {
-
-		Tile clickedTile = tileListView.getSelectionModel().getSelectedItem();
-		playedWord.append(clickedTile);
-
-		// remove tile from tileRack
-		wordListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
-			@Override
-			public ListCell<Tile> call(ListView<Tile> param) {
-				return new TileListCell();
+		
+		if(!(tileListView.getSelectionModel().getSelectedItem() == null)) {
+				
+			Tile clickedTile = tileListView.getSelectionModel().getSelectedItem();
+			
+			if(!clickedTile.equals(null)) {
+				playedWord.append(clickedTile);
 			}
-		});
-
-		try {
-			tileRack.remove(clickedTile);
-		} catch (TileNotInGroupException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
+			wordListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
+				@Override
+				public ListCell<Tile> call(ListView<Tile> param) {
+					return new TileListCell();
+				}
+			});
+	
+			try {
+				tileRack.remove(clickedTile);
+			} catch (TileNotInGroupException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@FXML
 	private void handleYourWordTileClicked(Event event) {
-		Tile clickedTile = wordListView.getSelectionModel().getSelectedItem();
-		tileRack.append(clickedTile);
+		
+		if(!(wordListView.getSelectionModel().getSelectedItem() == null)) {
+			Tile clickedTile = wordListView.getSelectionModel().getSelectedItem();
+			
+			tileRack.append(clickedTile);
 
-		// remove tile from tileRack
-		tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
-			@Override
-			public ListCell<Tile> call(ListView<Tile> param) {
-				return new TileListCell();
+			tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
+				@Override
+				public ListCell<Tile> call(ListView<Tile> param) {
+					return new TileListCell();
+				}
+			});
+
+			try {
+				playedWord.remove(clickedTile);
+			} catch (TileNotInGroupException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		});
-
-		try {
-			playedWord.remove(clickedTile);
-		} catch (TileNotInGroupException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 	}
