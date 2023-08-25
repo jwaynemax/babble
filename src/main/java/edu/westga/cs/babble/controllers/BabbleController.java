@@ -46,8 +46,8 @@ public class BabbleController {
 	 * @throws EmptyTileBagException
 	 */
 	public void initialize() throws EmptyTileBagException {
-		this.tileListView.setItems(tileRack.tiles());
-		this.wordListView.setItems(playedWord.tiles());
+		this.tileListView.setItems(this.tileRack.tiles());
+		this.wordListView.setItems(this.playedWord.tiles());
 
 		// cell renderer
 		this.tileListView.setCellFactory(new Callback<ListView<Tile>, ListCell<Tile>>() {
@@ -72,16 +72,25 @@ public class BabbleController {
 		}
 	}
 	
+	/**
+	 * Draws tiles from bag at start of game and after word is played
+	 * @throws EmptyTileBagException
+	 */
 	private void drawTilesFromBag() throws EmptyTileBagException {
 		while (this.tileRack.getNumberOfTilesNeeded() != 0) {
 			this.tile = this.tileBag.drawTile();
 			this.tileRack.append(this.tile);
 		}
 	}
-
+	
+	/**
+	 * Check value of letters in your word when play word is selected
+	 * @param event play word button clicked
+	 * @throws EmptyTileBagException
+	 */
 	@FXML
 	private void playWord(ActionEvent event) throws EmptyTileBagException {
-		if (this.word.isValidWord(this.playedWord.getHand()) == true) {
+		if (this.word.isValidWord(this.playedWord.getHand())) {
 
 			this.score.textProperty().bind(this.intProp.asString());
 			this.intProp.set(Integer.parseInt(this.score.getText()) + this.playedWord.getScore());
@@ -98,7 +107,12 @@ public class BabbleController {
 			message.show();
 		}
 	}
-
+	
+	/**
+	 * Reset the tiles in your word
+	 * @param event reset button clicked
+	 * @throws TileNotInGroupException
+	 */
 	@FXML
 	private void reset(ActionEvent event) throws TileNotInGroupException {
 
@@ -108,7 +122,11 @@ public class BabbleController {
 
 		this.playedWord.clear();
 	}
-
+	
+	/**
+	 * Move single tile to your word when clicked
+	 * @param event mouseClick for tile
+	 */
 	@FXML
 	private void handleTileClicked(Event event) {
 		
@@ -135,6 +153,10 @@ public class BabbleController {
 		}
 	}
 
+	/**
+	 * Move tile to tile field from your word when single tile clicked
+	 * @param event tile clicked in your word list view
+	 */
 	@FXML
 	private void handleYourWordTileClicked(Event event) {
 		
